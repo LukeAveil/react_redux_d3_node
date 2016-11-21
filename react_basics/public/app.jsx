@@ -12,12 +12,16 @@ var Greeter = React.createClass({
   onButtonClick: function(e) {
     e.preventDefault();
 
-    var name = this.refs.name.value;
-    this.refs.name.value = "";
+    var nameRef = this.refs.name;
 
-    this.setState({
-      name: name
-    });
+    var name = nameRef.value;
+    nameRef.value = "";
+
+    if (typeof name === 'string' && name.length > 0) {
+      this.setState({
+        name: name
+      });
+    }
   },
   render: function() {
     var name = this.state.name;
