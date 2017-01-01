@@ -37,10 +37,15 @@ var reducer = (state = stateDefault, action) => {
               ...state.movies,
               {
                 id: nextMovieId++,
-                movie: action.movie,
+                title: action.title,
                 genre: action.genre
               }
             ]
+          };
+        case 'REMOVE_MOVIE':
+          return {
+            ...state,
+            movies: state.movies.filter((movie) => movie.id !== action.id)
           };
       default:
         return state;
@@ -72,14 +77,19 @@ store.dispatch({
 
 store.dispatch({
   type: 'ADD_MOVIE',
-  movie: 'Matrix',
+  title: 'Matrix',
   genre: 'Sc-iFi'
 });
 
 store.dispatch({
   type: 'ADD_MOVIE',
-  movie: 'Titanic',
+  title: 'Titanic',
   genre: 'Romance'
+});
+
+store.dispatch({
+  type: 'REMOVE_MOVIE',
+  id: 2
 });
 
 store.dispatch({
