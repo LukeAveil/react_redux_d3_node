@@ -9,48 +9,57 @@ var stateDefault = {
 };
 
 var nextHobbyId = 1;
-
 var nextMovieId = 1;
 
-var reducer = (state = stateDefault, action) => {
+var nameReducer = (state = 'Anonymous', action) => {
   switch(action.type) {
     case 'CHANGE_NAME':
-      return {
-        ...state,
-        name: action.name
-      };
-      case 'ADD_HOBBY':
-        return {
-          ...state,
-          hobbies: [
-            ...state.hobbies,
-            {
-              id: nextHobbyId++,
-              hobby: action.hobby
-            }
-          ]
-        };
-        case 'ADD_MOVIE':
-          return {
-            ...state,
-            movies: [
-              ...state.movies,
-              {
-                id: nextMovieId++,
-                title: action.title,
-                genre: action.genre
-              }
-            ]
-          };
-        case 'REMOVE_MOVIE':
-          return {
-            ...state,
-            movies: state.movies.filter((movie) => movie.id !== action.id)
-          };
-      default:
-        return state;
-  }
+      return action.name;
+    default:
+      return state;
+  };
 };
+
+var hobbiesReducer = (state = [], action) => {
+  switch(action.type) {
+    case 'ADD_HOBBY':
+      return [
+        ...state,
+        {
+          id: nextHobbyId++,
+          hobby: action.hobby
+        }
+      ];
+    case 'REMOVE_HOBBY':
+      return state.filter((hobby) => hobby.id !== action.id)
+    default:
+      return state;
+  };
+};
+
+var moviesReducer = (state = [], action) => {
+  switch(action.type) {
+    case 'ADD_MOVIE':
+      return [
+        ...state,
+        {
+          id: nextMovieId++,
+          title: action.title,
+          genre: action.genre
+        }
+      ];
+    case 'REMOVE_MOVIE':
+      return state.filter((movie) => movie.id !== action.id)
+    default:
+      return state;
+  };
+};
+
+var reducer = redux.combineReducers({
+  name: nameReducer,
+  hobbies: hobbiesReducer,
+  movies: moviesReducer
+});
 
 var store = redux.createStore(reducer, redux.compose(
   window.devToolsExtension ? window.devToolsExtension() : f => f
@@ -73,6 +82,16 @@ store.dispatch({
 store.dispatch({
   type: 'ADD_HOBBY',
   hobby: 'Cycling'
+});
+
+store.dispatch({
+  type: 'ADD_HOBBY',
+  hobby: 'Walk'
+});
+
+store.dispatch({
+  type: 'REMOVE_HOBBY',
+  id: 2
 });
 
 store.dispatch({
