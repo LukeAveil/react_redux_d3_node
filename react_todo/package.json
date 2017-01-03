@@ -22,6 +22,7 @@
     "babel-preset-react": "^6.5.0",
     "css-loader": "^0.23.1",
     "foundation-sites": "6.2.0",
+    "moment": "^2.12.0",
     "node-uuid": "^1.4.7",
     "script-loader": "^0.6.1",
     "style-loader": "^0.13.0",
