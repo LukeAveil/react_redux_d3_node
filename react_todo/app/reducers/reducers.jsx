@@ -35,9 +35,8 @@ export var todosReducer = (state = [], action) => {
           var nextCompleted = !todo.completed;
 
           return {
-            ...state,
             completed: nextCompleted
-          }
+          };
         }
       });
     default:
